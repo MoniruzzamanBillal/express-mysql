@@ -23,6 +23,8 @@ module.exports.createStudent = async (req, res) => {
     const data = req.body;
     const values = Object.values(data);
 
+    // console.log(values);
+
     const que = `insert into student values(?)`;
 
     database.query(que, [values], (error, data) => {
@@ -49,13 +51,15 @@ module.exports.login = async (req, res) => {
       }
 
       if (data?.length < 1) {
-        return res.send({ data: "User dont exist!! " });
+        return res.send({ error: "User dont exist!! " });
       }
+      // console.log(data[0]);
 
       const token = jwt.sign(
         {
           userEmail: data[0]?.userEmail,
-          userPassword: data[0]?.userPassword,
+          name: data[0]?.name,
+          studentImg: data[0]?.studentImg,
         },
         "secretKey",
         { expiresIn: "6h" }
