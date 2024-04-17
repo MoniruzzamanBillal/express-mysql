@@ -37,3 +37,15 @@ export const loggedInSuccessfully = () =>
     progress: undefined,
     theme: "colored",
   });
+
+//! toast for success fully add user
+export const userAddedSuccessfully = () =>
+  toast.success("User added successfully!", {
+    position: "top-center",
+    autoClose: 1200,
+    hideProgressBar: false,
+    closeOnClick: true,
+    draggable: true,
+    progress: undefined,
+    theme: "colored",
+  });

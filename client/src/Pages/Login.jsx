@@ -1,15 +1,14 @@
 import { useForm } from "react-hook-form";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { UseAuth } from "../Context/AuthContext";
 import UseAxiosPrivate from "../Hooks/UseAxiosPrivate";
 import { loggedInSuccessfully } from "../Utils/ToastFunctions";
-import { jwtDecode } from "jwt-decode";
 
 const Login = () => {
   const { setToken, user } = UseAuth();
-  const navigate = useNavigate();
+
   const { axiosPrivateUrl } = UseAxiosPrivate();
 
   //   use form hook
@@ -31,9 +30,8 @@ const Login = () => {
     };
 
     axiosPrivateUrl
-      .post("/api/login", loginData)
+      .post("/api/auth/login", loginData)
       .then((response) => {
-        console.log(response?.data);
         const { token } = response?.data;
 
         //! execute this if no user
@@ -64,7 +62,7 @@ const Login = () => {
       });
   };
 
-  // console.log(user);
+  console.log(user);
 
   return (
     <div className="loginContainer ">
@@ -152,7 +150,7 @@ const Login = () => {
               Don't have an account ?{" "}
               <span className="text-blue-500 logoFont">
                 {" "}
-                <Link to={"/addStudent"}>Register here</Link>{" "}
+                <Link to={"/register"}>Register here</Link>{" "}
               </span>
             </p>
           </div>

@@ -13,10 +13,9 @@ export const AuthContextProvider = ({ children }) => {
   useEffect(() => {
     setUserLoading(true);
     const saveToken = localStorage.getItem("Authorization");
-    // console.log(saveToken);
+
     if (saveToken) {
       const decodedTokenInfo = jwtDecode(saveToken);
-      // console.log(decodedTokenInfo);
       setUser(decodedTokenInfo);
       setUserLoading(false);
     }

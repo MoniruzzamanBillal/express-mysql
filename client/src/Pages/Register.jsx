@@ -2,13 +2,15 @@ import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
+import axios from "axios";
 import { UseAuth } from "../Context/AuthContext";
 import UseAxiosPrivate from "../Hooks/UseAxiosPrivate";
-import axios from "axios";
-import { studentAddedSuccessfully } from "../Utils/ToastFunctions";
+import {
+  studentAddedSuccessfully,
+  userAddedSuccessfully,
+} from "../Utils/ToastFunctions";
 
-const AddStudent = () => {
+const Register = () => {
   const { setToken, user } = UseAuth();
   const navigate = useNavigate();
   const { axiosPrivateUrl } = UseAxiosPrivate();
@@ -21,12 +23,10 @@ const AddStudent = () => {
     formState: { errors, isSubmitting },
   } = useForm();
 
-  //   function for adding usser
-  const handleAddStudent = async (data) => {
+  const handleAddUser = async (data) => {
     const userName = data?.userName;
     const userEmail = data?.userEmail;
     const userPassword = data?.password;
-    const dept = data?.dept;
     const userImage = data?.file_input[0];
 
     const formData = new FormData();
@@ -37,18 +37,20 @@ const AddStudent = () => {
     );
     const userImg = imageResponse?.data?.data?.url;
 
-    const studentData = {
+    const id = Date.now();
+
+    console.log(id);
+
+    const userData = {
+      id,
       userName,
-      dept,
+      userPassword,
       userImg,
       userEmail,
-      userPassword,
     };
 
-    // console.log(studentData);
-
     axiosPrivateUrl
-      .post("/api/addStudent", studentData)
+      .post("/api/auth/userRegister", userData)
       .then((response) => {
         const { error } = response?.data;
 
@@ -67,7 +69,7 @@ const AddStudent = () => {
           return;
         }
 
-        studentAddedSuccessfully();
+        userAddedSuccessfully();
         reset();
         setTimeout(() => {
           navigate("/login");
@@ -79,15 +81,15 @@ const AddStudent = () => {
   };
 
   return (
-    <div className="addContainer  ">
-      <div className="addWrapper py-12  bg-[url('https://i.ibb.co/6bsNLj8/hosting-login.jpg')] bgImage flex justify-center items-center  ">
+    <div className="RegisterContainer">
+      <div className="RegisterWrapper  py-12  bg-[url('https://i.ibb.co/6bsNLj8/hosting-login.jpg')] bgImage flex justify-center items-center  ">
         <div className="card  bg-white  py-9 px-4 w-[92%] xsm:w-[82%] sm:w-[72%] md:w-[64%] xmd:w-[55%] lg:w-[46%] rounded border border-gray-200  shadow-2xl   ">
           <h1 className="mb-5 text-xl font-bold text-center text-gray-700 headingFont sm:text-2xl xsm:font-semibold sm:font-medium sm:mb-6 md:mb-8 lg:mb-10">
-            Add student
+            Register
           </h1>
 
           <form
-            onSubmit={handleSubmit(handleAddStudent)}
+            onSubmit={handleSubmit(handleAddUser)}
             className=" w-[92%] xsm:w-[80%] sm:w-[76%] md:w-[72%] m-auto flex flex-col gap-4 xsm:gap-5 sm:gap-6 md:gap-7 lg:gap-8  "
           >
             {/* name input starts  */}
@@ -158,29 +160,6 @@ const AddStudent = () => {
             </div>
             {/* user image field  */}
 
-            {/* dept input starts  */}
-            <div className="deptInput flex flex-col  gap-1">
-              <label htmlFor="dept" className="text-gray-800 ">
-                Department
-              </label>
-              <input
-                type="text"
-                id="dept"
-                {...register("dept", {
-                  required: "Deartment is required",
-                })}
-                className={`block w-full m-auto  border bg-gray-50 border-gray-300     text-gray-900 text-sm rounded   p-2.5 outline-none`}
-                placeholder="Enter your Department"
-              />
-
-              {errors?.dept && (
-                <p className=" pt-1.5 text-red-600 font-semibold ">
-                  {errors?.dept?.message}
-                </p>
-              )}
-            </div>
-            {/* dept input ends  */}
-
             {/* password input  */}
             <div className="passwordInput flex flex-col  gap-1">
               <label htmlFor="password" className="text-gray-800 ">
@@ -228,7 +207,7 @@ const AddStudent = () => {
                   <span className="sr-only">Loading...</span>
                 </div>
               ) : (
-                "Add Student"
+                "Register"
               )}
             </button>
           </form>
@@ -242,9 +221,10 @@ const AddStudent = () => {
           </div>
         </div>
       </div>
+
       <ToastContainer />
     </div>
   );
 };
 
-export default AddStudent;
+export default Register;

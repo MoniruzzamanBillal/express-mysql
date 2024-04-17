@@ -7,6 +7,7 @@ dotenv.config();
 
 //routers
 const studentRouter = require("./routes/Student.js");
+const authRouter = require("./routes/Auth.js");
 
 const app = express();
 const port = process.env.port || 8000;
@@ -22,16 +23,7 @@ app.use(
 );
 
 app.use("/api", studentRouter);
-
-app.get("/getBook", async (req, res) => {
-  const que = "select * from books";
-  database.query(que, (error, data) => {
-    if (error) {
-      return res.send(error);
-    }
-    res.send({ data });
-  });
-});
+app.use("/api/auth", authRouter);
 
 app.get("/", async (req, res) => {
   res.send({ message: "Server is running !!" });
