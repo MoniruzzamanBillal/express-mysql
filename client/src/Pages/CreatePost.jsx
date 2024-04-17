@@ -88,7 +88,7 @@ const CreatePost = () => {
       creationDate: writingDate,
     };
 
-    console.log(blogData);
+    // console.log(blogData);
 
     axiosPrivateUrl
       .post("/api/blog/create", blogData)

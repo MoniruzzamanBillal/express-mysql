@@ -67,8 +67,6 @@ const Login = () => {
       });
   };
 
-  console.log(user);
-
   return (
     <div className="loginContainer ">
       <div className="loginWrapper  h-screen bg-[url('https://i.ibb.co/6bsNLj8/hosting-login.jpg')] bgImage flex justify-center items-center  ">
