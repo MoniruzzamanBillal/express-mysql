@@ -40,8 +40,9 @@ module.exports.login = async (req, res) => {
       const token = jwt.sign(
         {
           userEmail: data[0]?.userEmail,
-          name: data[0]?.name,
-          studentImg: data[0]?.studentImg,
+          userName: data[0]?.userName,
+          userImg: data[0]?.userImg,
+          userId: data[0]?.id,
         },
         "secretKey",
         { expiresIn: "6h" }

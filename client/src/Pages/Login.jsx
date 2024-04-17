@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { UseAuth } from "../Context/AuthContext";
@@ -7,6 +7,7 @@ import UseAxiosPrivate from "../Hooks/UseAxiosPrivate";
 import { loggedInSuccessfully } from "../Utils/ToastFunctions";
 
 const Login = () => {
+  const navigate = useNavigate();
   const { setToken, user } = UseAuth();
 
   const { axiosPrivateUrl } = UseAxiosPrivate();
@@ -55,6 +56,10 @@ const Login = () => {
         if (token) {
           loggedInSuccessfully();
           reset();
+
+          setTimeout(() => {
+            navigate("/createPost");
+          }, 1100);
         }
       })
       .catch((error) => {
