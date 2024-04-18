@@ -113,6 +113,11 @@ const CreatePost = () => {
         }
 
         blogAddedSuccessfully();
+        setTitle("");
+        setValue("");
+        setTitleImg("");
+        setCategory("");
+        setFileName("");
       })
       .catch((err) => console.log(err));
   };
