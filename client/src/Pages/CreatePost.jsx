@@ -77,6 +77,8 @@ const CreatePost = () => {
 
     const writingDate = `${date}-${month}-${year}`;
 
+    const id = Date.now();
+
     const blogData = {
       uid: user?.userId,
       writer: user?.userName,
@@ -86,6 +88,7 @@ const CreatePost = () => {
       titleImg,
       description: value,
       creationDate: writingDate,
+      blogId: id,
     };
 
     // console.log(blogData);

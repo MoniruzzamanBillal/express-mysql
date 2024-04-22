@@ -3,11 +3,12 @@ import Login from "../Pages/Login";
 import AddStudent from "../Pages/AddStudent";
 import Register from "../Pages/Register";
 import CreatePost from "../Pages/CreatePost";
+import Home from "../Pages/Home";
 
 const Routes = createBrowserRouter([
   {
     path: "/",
-    element: <p>Home</p>,
+    element: <Home />,
   },
   {
     path: "/login",
