@@ -62,3 +62,33 @@ module.exports.getSingleBlog = async (req, res) => {
     res.send({ error });
   }
 };
+
+// UPDATE blogPost SET ? WHERE blogId = ?
+//! function for updating blog
+
+module.exports.upudateBlog = async (req, res) => {
+  {
+    try {
+      const { id } = req.params;
+
+      const reqData = req.body;
+
+      const que = "UPDATE blogPost SET ? WHERE blogId = ?";
+
+      database.query(que, [reqData, id], (error, data) => {
+        console.log("inside update ");
+        if (error) {
+          console.log(error);
+          return res.status(500).send({ error });
+        }
+
+        return res
+          .status(200)
+          .send({ message: "Blog updated succesdsfully !!", data });
+      });
+    } catch (error) {
+      console.log("Error in update blog function !!");
+      res.status(500).send({ error });
+    }
+  }
+};

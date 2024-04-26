@@ -86,16 +86,16 @@ const EditBlog = () => {
 
     // console.log("updated blog data = ", updatedData);
 
-    // axiosPublicUrl
-    //   .patch(`/api/blog/update/${id}`, blogData)
-    //   .then((response) => {
-    //     console.log(response?.data);
-    //     if (response?.data) {
-    //       blogUpdattedSuccessfully();
-    //       navigate("/myblog");
-    //     }
-    //   })
-    //   .catch((err) => console.log(err));
+    axiosPublicUrl
+      .patch(`/api/blog/${blogData?.blogId}`, updatedData)
+      .then((response) => {
+        console.log(response?.data);
+        if (response?.data) {
+          blogUpdattedSuccessfully();
+          //   navigate("/myblog");
+        }
+      })
+      .catch((err) => console.log(err));
   };
 
   // !  effect to get data from database and set to states
@@ -107,7 +107,7 @@ const EditBlog = () => {
     setValue(blogData?.description);
   }, [blogData, blogDataLoading, blogDataRefetch]);
 
-  console.log(blogData);
+  //   console.log(blogData);
 
   return (
     <div className="editBlogContainer   ">
