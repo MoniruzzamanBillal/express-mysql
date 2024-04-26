@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Afacad:wght@500&family=Libre+Baskerville&family=Lobster&family=Roboto&display=swap");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -13,4 +15,36 @@
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center center;
+}
+
+.blogImgContainer {
+  position: relative;
+}
+
+blogImgContainer::before {
+  content: "";
+  width: 100%;
+  height: 100%;
+  background-color: #8decb4;
+  position: absolute;
+  top: 20px;
+  left: -20px;
+  z-index: -1;
+}
+
+/* fonts  */
+.logoFont {
+  font-family: "Lobster", sans-serif;
+}
+
+.paragraphFont {
+  font-family: "Roboto", sans-serif;
+}
+
+.navLinkFont {
+  font-family: "Afacad", sans-serif;
+}
+
+.headingFont {
+  font-family: "Libre Baskerville", serif;
 }

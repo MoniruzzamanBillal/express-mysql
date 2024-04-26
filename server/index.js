@@ -23,7 +23,7 @@ app.use(
   })
 );
 
-app.use("/api", studentRouter);
+// app.use("/api", studentRouter);
 app.use("/api/auth", authRouter);
 app.use("/api/blog", blogRouter);
 

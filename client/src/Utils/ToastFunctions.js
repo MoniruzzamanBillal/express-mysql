@@ -97,3 +97,16 @@ export const blogAddedSuccessfully = () =>
     progress: undefined,
     theme: "colored",
   });
+
+//! toast for update a blog
+export const blogUpdattedSuccessfully = () =>
+  toast.success("Blog updated successfully!", {
+    position: "top-center",
+    autoClose: 1100,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    theme: "colored",
+  });

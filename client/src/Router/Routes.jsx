@@ -4,11 +4,32 @@ import AddStudent from "../Pages/AddStudent";
 import Register from "../Pages/Register";
 import CreatePost from "../Pages/CreatePost";
 import Home from "../Pages/Home";
+import RootPage from "./RootPage";
+import BlogDetail from "../Pages/BlogDetail";
+import EditBlog from "../Pages/EditBlog";
 
 const Routes = createBrowserRouter([
   {
     path: "/",
-    element: <Home />,
+    element: <RootPage />,
+    children: [
+      {
+        path: "/",
+        element: <Home />,
+      },
+      {
+        path: "/createPost",
+        element: <CreatePost />,
+      },
+      {
+        path: "/detail/:id",
+        element: <BlogDetail />,
+      },
+      {
+        path: "/edit/:id",
+        element: <EditBlog />,
+      },
+    ],
   },
   {
     path: "/login",
@@ -17,10 +38,6 @@ const Routes = createBrowserRouter([
   {
     path: "/register",
     element: <Register />,
-  },
-  {
-    path: "/createPost",
-    element: <CreatePost />,
   },
   {
     path: "/addStudent",
