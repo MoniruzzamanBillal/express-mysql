@@ -4,21 +4,20 @@ import { FaLinkedin, FaGithubSquare, FaFacebookSquare } from "react-icons/fa";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { motion } from "framer-motion";
-
-const NavLinks = [
-  {
-    title: "Home",
-    path: "/",
-  },
-  {
-    title: "About",
-    path: "/about",
-  },
-];
+import { UseAuth } from "../../Context/AuthContext";
 
 const NavBar = () => {
+  const { user, userLoading, setUser } = UseAuth();
   const [isSidebarActive, setIsSidebarActive] = useState(false);
   const [isUserMenuActive, setIsUserMenuActive] = useState(false);
+
+  // console.log(user);
+
+  // function for logout a user
+  const handleLogout = () => {
+    localStorage.clear();
+    setUser(null);
+  };
 
   return (
     <div className="navContainer fixed w-full  backdrop-blur z-[10] ">
@@ -63,73 +62,54 @@ const NavBar = () => {
         >
           {/* avatar starts  */}
 
-          <div className="userItems">
-            <div
-              className=" relative abatar cursor-pointer  flex justify-between items-center self-center gap-1.5 "
-              onClick={() => setIsUserMenuActive(!isUserMenuActive)}
-            >
-              <p className=" text-sm "> user?.displayName </p>
-              <img
-                className="w-8 h-8 p-.5 rounded-full ring-2 ring-gray-300 dark:ring-gray-500"
-                src="https://i.ibb.co/P5sGcht/images.jpg"
-                alt="Bordered avatar"
-              />
-            </div>
-            {/*  */}
-            {/* user nav  */}
-            <div
-              className={` userNav ${
-                isUserMenuActive ? "flex" : "hidden"
-              }  bg-gray-600 flex  absolute top-11 right-[12.3rem]  px-6 py-2 shadow-md  flex-col gap-2 text-gray-100 rounded  `}
-            >
-              <Link
-                to={"/createPost"}
+          {user && (
+            <div className="userItems relative ">
+              <div
+                className="  abatar cursor-pointer  flex justify-between items-center self-center gap-1.5 "
                 onClick={() => setIsUserMenuActive(!isUserMenuActive)}
               >
-                Create
-              </Link>
-              <Link
-                to={"/myblog"}
-                onClick={() => setIsUserMenuActive(!isUserMenuActive)}
+                <p className=" text-sm "> {user?.userName} </p>
+                <img
+                  className="w-8 h-8 p-.5 rounded-full ring-2 ring-gray-300 dark:ring-gray-500"
+                  src={user?.userImg}
+                  alt="Bordered avatar"
+                />
+              </div>
+              {/*  */}
+              {/* user nav  */}
+              <div
+                className={` userNav ${
+                  isUserMenuActive ? "flex" : "hidden"
+                }  bg-gray-600 flex  absolute top-[2.2rem] left-[0rem]  px-6 py-2 shadow-md  flex-col gap-2 text-gray-100 rounded  `}
               >
-                My blogs
-              </Link>
+                <Link
+                  to={"/createPost"}
+                  onClick={() => setIsUserMenuActive(!isUserMenuActive)}
+                >
+                  Create
+                </Link>
+                <Link
+                  to={"/myblog"}
+                  onClick={() => setIsUserMenuActive(!isUserMenuActive)}
+                >
+                  My blogs
+                </Link>
+              </div>
+              {/* user nav ends  */}
             </div>
-            {/* user nav ends  */}
-          </div>
+          )}
 
           {/* avatar ends  */}
 
-          {/* nav link  */}
-          <div className="navLinks     ">
-            {NavLinks &&
-              NavLinks.map((link, ind) => (
-                <Link
-                  key={ind}
-                  to={`${link?.path}`}
-                  className={`   ${
-                    NavLinks.length - 1 === ind ? "mr-0" : "mr-2"
-                  }   `}
-                >
-                  {link?.title}{" "}
-                </Link>
-              ))}
-          </div>
-          {/* nav link  */}
-
           {/* login button  */}
-          <div className="loginButton  ">
-            {/* {user && user ? (
-            <button onClick={() => logoutFunction()}>Log out</button>
-          ) : (
-            <Link to="/login">
-              <button>Login</button>
-            </Link>
-          )} */}
-
-            <Link to="/login">
-              <button>Login</button>
-            </Link>
+          <div className="loginButton font-semibold  ">
+            {user && user ? (
+              <button onClick={() => handleLogout()}>Log out</button>
+            ) : (
+              <Link to="/login">
+                <button className="  ">Login</button>
+              </Link>
+            )}
           </div>
           {/* login button  */}
         </motion.div>
@@ -166,22 +146,20 @@ const NavBar = () => {
           <motion.div
             className={` ${
               isSidebarActive ? "flex" : "hidden"
-            }  mobileMenu bg-gray-600 absolute top-6 right-0  px-6 py-2 shadow-sm  flex-col gap-2 text-gray-100  `}
+            }  mobileMenu bg-gray-600 absolute top-[1rem] right-0  px-5 py-2.5 shadow-sm  flex-col gap-y-3 text-gray-100  items-center justify-center w-[9rem]  `}
           >
-            {/* nav link  */}
-            <div className="navLinks flex flex-col  gap-2   ">
-              {NavLinks &&
-                NavLinks.map((link, ind) => (
-                  <Link key={ind} to={`${link?.path}`} className={`      `}>
-                    {link?.title}{" "}
-                  </Link>
-                ))}
-            </div>
-            {/* nav link  */}
-
             {/* creatye button  */}
             <div className="createBtn ">
               <Link>Create</Link>
+            </div>
+
+            <div className="myBlogs  ">
+              <Link
+                to={"/myblog"}
+                onClick={() => setIsUserMenuActive(!isUserMenuActive)}
+              >
+                My blogs
+              </Link>
             </div>
 
             {/* creatye button  */}

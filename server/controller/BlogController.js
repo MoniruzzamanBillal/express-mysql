@@ -76,7 +76,6 @@ module.exports.upudateBlog = async (req, res) => {
       const que = "UPDATE blogPost SET ? WHERE blogId = ?";
 
       database.query(que, [reqData, id], (error, data) => {
-        console.log("inside update ");
         if (error) {
           console.log(error);
           return res.status(500).send({ error });

@@ -58,7 +58,7 @@ const Login = () => {
           reset();
 
           setTimeout(() => {
-            navigate("/createPost");
+            navigate("/");
           }, 1100);
         }
       })

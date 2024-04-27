@@ -16,7 +16,7 @@ const BlogCard = ({ blog, ind }) => {
 
   const [smallDescription, setSmallDescription] = useState([]);
 
-  //! effect ttto get description text
+  //! effect to get description text
 
   useEffect(() => {
     if (blog) {
@@ -45,15 +45,15 @@ const BlogCard = ({ blog, ind }) => {
           }  blogCardLeft  w-[54%]    flex flex-col gap-y-3 lg:gap-y-6 xl:gap-y-8`}
         >
           {/* heading starts  */}
-          <h1 className=" font-semibold text-lg lg:text-2xl xl:text-3xl ">
+          <h1 className=" font-semibold text-lg lg:text-2xl xl:text-3xl  ">
             {title}
           </h1>
           {/* heading ends  */}
 
           {/* small description starts  */}
-          <h1 className="  text-sm lg:text-base ">
-            {smallDescription && smallDescription?.length >= 450
-              ? smallDescription.slice(0, 450) + "......."
+          <h1 className="  text-sm lg:text-base  ">
+            {smallDescription && smallDescription?.length >= 240
+              ? smallDescription.slice(0, 240) + "......."
               : smallDescription}
           </h1>
           {/* small description ends  */}
