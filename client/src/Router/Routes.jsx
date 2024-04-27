@@ -7,6 +7,7 @@ import Home from "../Pages/Home";
 import RootPage from "./RootPage";
 import BlogDetail from "../Pages/BlogDetail";
 import EditBlog from "../Pages/EditBlog";
+import MyBlogs from "../Pages/MyBlogs";
 
 const Routes = createBrowserRouter([
   {
@@ -20,6 +21,10 @@ const Routes = createBrowserRouter([
       {
         path: "/createPost",
         element: <CreatePost />,
+      },
+      {
+        path: "/myblog",
+        element: <MyBlogs />,
       },
       {
         path: "/detail/:id",

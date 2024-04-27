@@ -91,3 +91,22 @@ module.exports.upudateBlog = async (req, res) => {
     }
   }
 };
+
+// function for getting blogs of a user based on user id
+module.exports.getUserBlog = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const que = " select * from blogPost where uid=? ";
+    database.query(que, [id], (error, data) => {
+      if (error) {
+        return res.status(500).send({ error });
+      }
+
+      return res.status(200).send({ data });
+    });
+  } catch (error) {
+    console.log("error in getting user blog ");
+    res.status(500).send({ error });
+  }
+};
