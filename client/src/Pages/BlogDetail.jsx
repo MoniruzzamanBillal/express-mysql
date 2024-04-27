@@ -1,8 +1,11 @@
-import React, { useEffect, useState } from "react";
+import { useState } from "react";
+import { RxCross1 } from "react-icons/rx";
 
 import GetSingleBlog from "../Hooks/GetSingleBlog";
 import { motion } from "framer-motion";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { UseAuth } from "../Context/AuthContext";
+import UseAxiosPublicUrl from "../Hooks/UseAxiosPublic";
 
 const detailVarient = {
   hidden: {
@@ -15,18 +18,75 @@ const detailVarient = {
   },
 };
 
+// delete modal
+const DeleteModal = ({ id, setDeleteModal }) => {
+  const { axiosPublicUrl } = UseAxiosPublicUrl();
+  const navigate = useNavigate();
+
+  const handleDeleteBlog = (id) => {
+    console.log("blog id = ", id);
+    setDeleteModal(false);
+
+    axiosPublicUrl
+      .delete(`/api/blog/delete/${id}`)
+      .then((result) => {
+        console.log(result?.data);
+
+        if (result?.data) {
+          navigate("/myblog");
+        }
+      })
+      .catch((error) => {
+        console.log("error ");
+        console.log(error);
+      });
+  };
+
+  return (
+    <div className="modalContainer bg-sky-300 rounded-md shadow-lg relative  ">
+      <div className="modalWrapper py-6 px-10 flex flex-col justify-center items-center gap-y-8 ">
+        <h1 className=" text-4xl font-semibold ">Are you want to delete ? </h1>
+        <h1 className=" text-2xl font-semibold ">
+          Once you delete a blog , you can't undo it !!
+        </h1>
+        <button
+          onClick={() => handleDeleteBlog(id)}
+          className="bg-red-500 text-gray-50 hover:bg-red-600 hover:text-gray-100 hover:scale-105 active:scale-100 hover:shadow-lg py-2 px-5 rounded transition-all duration-200 font-medium  navLinkFont"
+        >
+          Delete{" "}
+        </button>
+      </div>
+
+      <div
+        className="crossIcon absolute top-0 right-0 text-2xl font-bold text-red-700 cursor-pointer "
+        onClick={() => setDeleteModal(false)}
+      >
+        <RxCross1 />
+      </div>
+    </div>
+  );
+};
+
 const BlogDetail = () => {
   const { id } = useParams();
+  const { user, userLoading } = UseAuth();
+
+  const [deleteModal, setDeleteModal] = useState(false);
 
   const { blogData, blogDataLoading, blogDataRefetch } = GetSingleBlog(id);
 
-  console.log(blogData);
+  //! function for deleting a blog
+  const handleDeleteModal = () => {
+    setDeleteModal(true);
+  };
 
   return (
-    <div className="detailContainer pt-[4.4rem] ">
+    <div className="detailContainer pt-[4.4rem] relative ">
+      {/*  */}
       <motion.div
-        key={blogData?.blogId}
-        className="detailWrapper  w-[98%] xsm:w-[95%] sm:w-[92%]  m-auto "
+        className={` ${
+          deleteModal ? "blur-md" : ""
+        } detailWrapper  w-[98%] xsm:w-[95%] sm:w-[92%]  m-auto    `}
       >
         {/* detail top section  */}
         <div className="detailTop   flex flex-col md:flex-row gap-9 md:gap-0 justify-evenly items-center mb-6 sm:mb-7 md:mb-10 xmd:mb-12 lg:mb-16 ">
@@ -51,7 +111,7 @@ const BlogDetail = () => {
               {/* writer image  */}
               <div className="writerImg   ">
                 <img
-                  class=" w-10 h-10 xsm:w-11 xsm:h-11 sm:w-12 sm:h-12 rounded-full"
+                  className=" w-10 h-10 xsm:w-11 xsm:h-11 sm:w-12 sm:h-12 rounded-full"
                   src={
                     blogData?.writerImg
                       ? blogData?.writerImg
@@ -79,27 +139,24 @@ const BlogDetail = () => {
 
             {/* edit section starts  */}
 
-            {/* {user?.displayName === blogData[0]?.writer ? (
-                <div className="editContainer mt-7  ">
-                  <Link
-                    to={`/edit/${blogData[0]?._id}`}
-                    className=" bg-red-500 text-gray-50 hover:bg-red-600 hover:text-gray-100 hover:scale-105 active:scale-100 hover:shadow-lg py-2 px-5 rounded transition-all duration-200 font-medium  navLinkFont "
-                  >
-                    Edit post
-                  </Link>
-                </div>
-              ) : (
-                ""
-              )} */}
-
-            <div className="editContainer mt-7  ">
-              <Link
-                to={`/edit/${blogData?.blogId}`}
-                className=" bg-red-500 text-gray-50 hover:bg-red-600 hover:text-gray-100 hover:scale-105 active:scale-100 hover:shadow-lg py-2 px-5 rounded transition-all duration-200 font-medium  navLinkFont "
-              >
-                Edit post
-              </Link>
-            </div>
+            {user?.uid === blogData?.userId ? (
+              <div className="editContainer mt-9 flex  items-center gap-x-4  ">
+                <Link
+                  to={`/edit/${blogData?.blogId}`}
+                  className=" bg-green-500 text-gray-50 hover:bg-green-600 hover:text-gray-100 hover:scale-105 active:scale-100 hover:shadow-lg py-2 px-5 rounded transition-all duration-200 font-medium  navLinkFont "
+                >
+                  Edit post
+                </Link>
+                <button
+                  onClick={() => handleDeleteModal()}
+                  className="bg-red-500 text-gray-50 hover:bg-red-600 hover:text-gray-100 hover:scale-105 active:scale-100 hover:shadow-lg py-2 px-5 rounded transition-all duration-200 font-medium  navLinkFont"
+                >
+                  Delete{" "}
+                </button>
+              </div>
+            ) : (
+              ""
+            )}
 
             {/* edit section ends */}
 
@@ -131,8 +188,6 @@ const BlogDetail = () => {
 
         {/* detail paragraph starts  */}
 
-        {/* detail paragraph container  */}
-
         <div className="detailCOntainer  flex justify-between   ">
           <div className="detailParagraphContainer w-[97%] xsm:w-[94%] sm:w-[90%] xmd:w-[68%] paragraphFont text-sm xsm:text-base sm:text-lg m-auto    ">
             {/* detail paragraph  */}
@@ -156,12 +211,17 @@ const BlogDetail = () => {
           </div>
         </div>
 
-        {/* detail paragraph container  */}
-
         {/* detail paragraph ends */}
 
         {/*  */}
       </motion.div>
+      {/* delete modal starts  */}
+      {deleteModal && (
+        <div className="deleteModal   absolute top-[50%] left-[50%] transform -translate-x-1/2 -translate-y-1/2  ">
+          <DeleteModal id={blogData?.blogId} setDeleteModal={setDeleteModal} />
+        </div>
+      )}
+      {/* delete modal ends  */}
     </div>
   );
 };

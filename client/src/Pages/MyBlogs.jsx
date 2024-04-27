@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { UseAuth } from "../Context/AuthContext";
 import GetUserBlog from "../Hooks/GetUserBlog";
 import MyBlogCard from "../Components/MyBlog/MyBlogCard";
@@ -9,18 +9,13 @@ const MyBlogs = () => {
 
   const { userBlogs, userBlogsLoading, userBlogRefetch } = GetUserBlog(userId);
 
-  console.log(user);
-  //   console.log(userBlogs);
-
-  //   effect to set user in state
+  //! effect to set user in state
   useEffect(() => {
     if (user?.userId) {
       setUserId(user.userId);
       userBlogRefetch();
     }
   }, [user, userLoading, userBlogRefetch]);
-
-  console.log(userBlogsLoading);
 
   if (userLoading || userBlogsLoading) {
     return <div>Loading...</div>;

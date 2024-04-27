@@ -92,7 +92,7 @@ module.exports.upudateBlog = async (req, res) => {
   }
 };
 
-// function for getting blogs of a user based on user id
+//! function for getting blogs of a user based on user id
 module.exports.getUserBlog = async (req, res) => {
   try {
     const { id } = req.params;
@@ -107,6 +107,27 @@ module.exports.getUserBlog = async (req, res) => {
     });
   } catch (error) {
     console.log("error in getting user blog ");
+    res.status(500).send({ error });
+  }
+};
+
+//! delete particular blog based on blog id
+
+module.exports.deleteBlog = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const deleteQue = " delete from blogPost where blogId=? ";
+
+    database.query(deleteQue, [id], (error, data) => {
+      if (error) {
+        return res.status(500).send({ error });
+      }
+
+      return res.status(200).send({ message: "Blog deleted successfully !! " });
+    });
+  } catch (error) {
+    console.log("error in delete controller  ");
     res.status(500).send({ error });
   }
 };
