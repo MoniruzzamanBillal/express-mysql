@@ -92,7 +92,9 @@ const EditBlog = () => {
         console.log(response?.data);
         if (response?.data) {
           blogUpdattedSuccessfully();
-          //   navigate("/myblog");
+          setTimeout(() => {
+            navigate("/myblog");
+          }, 1200);
         }
       })
       .catch((err) => console.log(err));

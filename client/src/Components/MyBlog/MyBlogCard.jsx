@@ -24,7 +24,7 @@ const MyBlogCard = ({ blog }) => {
 
   return (
     <div className="blogCardContainer ">
-      <div className="flex flex-col justify-between overflow-hidden rounded-lg border bg-gray-100 hover:bg-gray-200 group cursor-pointer shadow-md hover:shadow-xl h-[30rem] ">
+      <div className="flex flex-col justify-between overflow-hidden rounded-lg border border-gray-300 bg-gray-100 hover:bg-gray-200 group cursor-pointer shadow-xl hover:shadow-2xl h-[30rem] ">
         <div className=" imageContainer  relative block h-48 overflow-hidden bg-gray-100 md:h-64">
           <img
             src={blog?.titleImg}

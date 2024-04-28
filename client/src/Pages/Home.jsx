@@ -1,4 +1,3 @@
-import React from "react";
 import BlogCard from "../Components/Home/BlogCard";
 import { motion } from "framer-motion";
 import GetAllBlogs from "../Hooks/GetAllBlogs";

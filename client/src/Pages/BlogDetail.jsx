@@ -6,6 +6,8 @@ import { motion } from "framer-motion";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { UseAuth } from "../Context/AuthContext";
 import UseAxiosPublicUrl from "../Hooks/UseAxiosPublic";
+import Comment from "../Components/shared/Comment";
+import { blogDeleteSuccessfully } from "../Utils/ToastFunctions";
 
 const detailVarient = {
   hidden: {
@@ -18,13 +20,13 @@ const detailVarient = {
   },
 };
 
-// delete modal
+// delete modal starts
 const DeleteModal = ({ id, setDeleteModal }) => {
   const { axiosPublicUrl } = UseAxiosPublicUrl();
   const navigate = useNavigate();
 
   const handleDeleteBlog = (id) => {
-    console.log("blog id = ", id);
+    // console.log("blog id = ", id);
     setDeleteModal(false);
 
     axiosPublicUrl
@@ -33,7 +35,10 @@ const DeleteModal = ({ id, setDeleteModal }) => {
         console.log(result?.data);
 
         if (result?.data) {
-          navigate("/myblog");
+          blogDeleteSuccessfully();
+          setTimeout(() => {
+            navigate("/myblog");
+          }, 1200);
         }
       })
       .catch((error) => {
@@ -66,6 +71,7 @@ const DeleteModal = ({ id, setDeleteModal }) => {
     </div>
   );
 };
+// delete modal ends
 
 const BlogDetail = () => {
   const { id } = useParams();
@@ -80,13 +86,16 @@ const BlogDetail = () => {
     setDeleteModal(true);
   };
 
+  // console.log(blogData);
+  // console.log(user);
+
   return (
-    <div className="detailContainer pt-[4.4rem] relative ">
+    <div className="detailContainer pt-[4.4rem] relative   ">
       {/*  */}
       <motion.div
         className={` ${
           deleteModal ? "blur-md" : ""
-        } detailWrapper  w-[98%] xsm:w-[95%] sm:w-[92%]  m-auto    `}
+        } detailWrapper  w-[98%] xsm:w-[95%] sm:w-[92%]  m-auto  min-h-screen    `}
       >
         {/* detail top section  */}
         <div className="detailTop   flex flex-col md:flex-row gap-9 md:gap-0 justify-evenly items-center mb-6 sm:mb-7 md:mb-10 xmd:mb-12 lg:mb-16 ">
@@ -139,7 +148,7 @@ const BlogDetail = () => {
 
             {/* edit section starts  */}
 
-            {user?.uid === blogData?.userId ? (
+            {blogData?.uid === user?.userId ? (
               <div className="editContainer mt-9 flex  items-center gap-x-4  ">
                 <Link
                   to={`/edit/${blogData?.blogId}`}
@@ -188,7 +197,7 @@ const BlogDetail = () => {
 
         {/* detail paragraph starts  */}
 
-        <div className="detailCOntainer  flex justify-between   ">
+        <div className="detailCOntainer  flex justify-between  mb-6   ">
           <div className="detailParagraphContainer w-[97%] xsm:w-[94%] sm:w-[90%] xmd:w-[68%] paragraphFont text-sm xsm:text-base sm:text-lg m-auto    ">
             {/* detail paragraph  */}
             <motion.div

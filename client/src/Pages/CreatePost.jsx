@@ -10,6 +10,7 @@ import {
   blogAddedSuccessfully,
   inputFieldError,
 } from "../Utils/ToastFunctions";
+import { useNavigate } from "react-router-dom";
 
 // modules for text editer
 const modules = {
@@ -28,6 +29,7 @@ const modules = {
 };
 
 const CreatePost = () => {
+  const naviagte = useNavigate();
   const { user } = UseAuth();
   const [title, setTitle] = useState("");
   const [value, setValue] = useState("");
@@ -104,7 +106,7 @@ const CreatePost = () => {
         if (error) {
           toast.error(`${error?.sqlMessage}`, {
             position: "top-center",
-            autoClose: 2000,
+            autoClose: 9000,
             hideProgressBar: false,
             closeOnClick: true,
             pauseOnHover: false,
@@ -116,6 +118,11 @@ const CreatePost = () => {
         }
 
         blogAddedSuccessfully();
+
+        setTimeout(() => {
+          naviagte("/myblog");
+        }, 1200);
+
         setTitle("");
         setValue("");
         setTitleImg("");

@@ -110,3 +110,42 @@ export const blogUpdattedSuccessfully = () =>
     progress: undefined,
     theme: "colored",
   });
+
+//! toast for deleting a blog
+export const blogDeleteSuccessfully = () =>
+  toast.success("Blog Delete successfully!", {
+    position: "top-center",
+    autoClose: 1100,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    theme: "colored",
+  });
+
+// function for comment error
+export const commentError = () =>
+  toast.error("Comment is required", {
+    position: "top-center",
+    autoClose: 2000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    theme: "colored",
+  });
+
+//! function for successfully add comment
+export const commentAddedSuccessfully = () =>
+  toast.success("Comment added successfully!", {
+    position: "top-center",
+    autoClose: 1000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    theme: "colored",
+  });

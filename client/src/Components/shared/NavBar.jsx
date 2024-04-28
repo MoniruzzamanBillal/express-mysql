@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FaLinkedin, FaGithubSquare, FaFacebookSquare } from "react-icons/fa";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -7,6 +7,7 @@ import { motion } from "framer-motion";
 import { UseAuth } from "../../Context/AuthContext";
 
 const NavBar = () => {
+  const navigate = useNavigate();
   const { user, userLoading, setUser } = UseAuth();
   const [isSidebarActive, setIsSidebarActive] = useState(false);
   const [isUserMenuActive, setIsUserMenuActive] = useState(false);
@@ -17,6 +18,7 @@ const NavBar = () => {
   const handleLogout = () => {
     localStorage.clear();
     setUser(null);
+    navigate("/");
   };
 
   return (

@@ -17,7 +17,11 @@ const RootPage = () => {
       {/* body container ends  */}
 
       {/* footer starts  */}
-      <Footer />
+      <div className="footerSection bg-gray-600 ">
+        <div className="py-4 text-center text-sm text-gray-100">
+          © 2024 - All rights reserved.
+        </div>
+      </div>
       {/* footer ends  */}
     </div>
   );
