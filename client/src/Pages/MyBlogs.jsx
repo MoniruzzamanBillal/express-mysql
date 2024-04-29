@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { UseAuth } from "../Context/AuthContext";
 import GetUserBlog from "../Hooks/GetUserBlog";
 import MyBlogCard from "../Components/MyBlog/MyBlogCard";
+import Loading from "../Components/loading/Loading";
 
 const MyBlogs = () => {
   const { user, userLoading } = UseAuth();
@@ -20,7 +21,7 @@ const MyBlogs = () => {
   // console.log(userBlogs?.length);
 
   if (userLoading || userBlogsLoading) {
-    return <div>Loading...</div>;
+    return <Loading />;
   }
 
   return (

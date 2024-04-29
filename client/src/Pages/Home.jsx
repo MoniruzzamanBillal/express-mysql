@@ -1,11 +1,14 @@
 import BlogCard from "../Components/Home/BlogCard";
 import { motion } from "framer-motion";
 import GetAllBlogs from "../Hooks/GetAllBlogs";
+import Loading from "../Components/loading/Loading";
 
 const Home = () => {
   const { allBlogsData, allBlogsRefetch, allBlogsDataLoading } = GetAllBlogs();
 
-  // console.log(allBlogsData);
+  if (allBlogsDataLoading) {
+    return <Loading />;
+  }
 
   return (
     <div className="homeContainer py-10  ">

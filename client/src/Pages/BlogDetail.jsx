@@ -8,6 +8,7 @@ import { UseAuth } from "../Context/AuthContext";
 import UseAxiosPublicUrl from "../Hooks/UseAxiosPublic";
 import Comment from "../Components/shared/Comment";
 import { blogDeleteSuccessfully } from "../Utils/ToastFunctions";
+import Loading from "../Components/loading/Loading";
 
 const detailVarient = {
   hidden: {
@@ -25,6 +26,7 @@ const DeleteModal = ({ id, setDeleteModal }) => {
   const { axiosPublicUrl } = UseAxiosPublicUrl();
   const navigate = useNavigate();
 
+  // function for deleting a blog
   const handleDeleteBlog = (id) => {
     // console.log("blog id = ", id);
     setDeleteModal(false);
@@ -88,6 +90,10 @@ const BlogDetail = () => {
 
   // console.log(blogData);
   // console.log(user);
+
+  if (userLoading || blogDataLoading) {
+    <Loading />;
+  }
 
   return (
     <div className="detailContainer pt-[4.4rem] relative   ">
